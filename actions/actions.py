@@ -69,14 +69,19 @@ class FirstTimeForm(FormAction):
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
 
-        return["first_time"]
+        if tracker.get_slot("first_time") == True:
+            return["first_time","given_name","location"]
+        else:
+            return["first_time"]
 
     def slot_mappings(self) -> Text:
         return {
         "first_time": [
             self.from_intent(intent="affirm", value=True),
             self.from_intent(intent="deny", value=False)
-            ]
+            ],
+        "given_name": self.from_text(),
+        "location": self.from_text()
         }
 
     def submit(
@@ -86,10 +91,10 @@ class FirstTimeForm(FormAction):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         if tracker.get_slot("first_time") == False:
-            dispatcher.utter_message(text="Welcome back!")
+            dispatcher.utter_message(template="utter_welcome_back")
         else:
-            dispatcher.utter_message(text="Hi! Welcome.")
-
+#            dispatcher.utter_message(template="utter_greet")
+            dispatcher.utter_message(template="utter_greet_with_name")
         return[]
 
 
@@ -135,7 +140,13 @@ class LanguageQuestionsForm(FormAction):
 
         # if the answer to "Did we do OK?" is no...
         if tracker.get_slot("willing_to_do_language_survey") == True:
-            return["willing_to_do_language_survey","language_at_home","language_for_written_comms","language_for_verbal_comms","preferred_channel"]
+            return[
+                    "willing_to_do_language_survey",
+                    "language_at_home",
+                    "language_for_written_comms",
+                    "language_for_verbal_comms",
+                    "preferred_channel"
+                    ]
         else:
             return["willing_to_do_language_survey"]
 
@@ -236,7 +247,7 @@ class ActionGetPandemicVideo(Action):
         #     "type": "video",
         #     "payload": {
         #         "title": "Watch Below Video",
-        #         "src": "https://www.youtube.com/embed/-F6h43DRpcU"
+        #         "src": "https://www.youtube.com/watch?v=nMelwUuGqpA"
         #     }
         # })
 

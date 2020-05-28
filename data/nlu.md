@@ -21,10 +21,12 @@
 ## intent:ask_for_stats
 - How many people have the coronavirus
 - Give me some statistics
+- How many people have the disease?
 - How many people are infected
 
 ## intent:affirm
 - yes
+- 👍
 - indeed
 - of course
 - that sounds good
@@ -33,6 +35,7 @@
 
 ## intent:deny
 - no
+- 👎
 - never
 - I don't think so
 - don't like that
@@ -316,6 +319,7 @@
 - How can I avoid getting the disease?
 - How can I protect myself against getting COVID-19?
 - How can I protect myself?
+- How can I keep myself safe?
 - How can I protect myself against the virus?
 
 ## intent:covid_how_spread
@@ -387,6 +391,8 @@
 
 ## intent:greet
 - sup
+- restart
+- start
 - whatsup
 - what do you do
 - what can you do
@@ -402,3 +408,11 @@
 - good afternoon
 - good morning
 - Hi
+
+## intent:out_of_scope
+- Who is better Ronaldo or Messi?
+- Where can I get a job?
+- Do you know who is responsible for the crisis?
+- What is the weather going to be like?
+- Barca or Real?
+- Do you think Barcelona or Real Madrid are better?

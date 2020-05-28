@@ -35,13 +35,12 @@ intents:
 - covid_symptoms
 - wash_hands_how
 - wash_hands_frequency
-- collect_fallback
 - fallback
 - goodbye
-- greeting
 - greet
 - affirm
 - deny
+- out_of_scope
 - get_contact_details
 - get_feedback
 - ask_for_stats
@@ -64,6 +63,10 @@ actions:
 
 slots:
   first_time:
+    type: unfeaturized
+  given_name:
+    type: unfeaturized
+  location:
     type: unfeaturized
   myth_source:
     type: unfeaturized
@@ -99,11 +102,29 @@ responses:
     utter_ask_first_time:
     - text: "Is this the first time we have chatted?"
 
+    utter_ask_given_name:
+    - text: "What do your friends call you?"
+
+    utter_ask_location:
+    - text: "Where are you?"
+      buttons:
+      - title: "N. Kivu"
+        payload: "kivu_nord"
+      - title: "S. Kivu"
+        payload: "kivu_sud"
+      - title: "Ituri"
+        payload: "ituri"
+      - title: "Other"
+        payload: "other"
+
+    utter_welcome_back:
+    - text: "Welcome back!"
+
     utter_ask_willing_to_do_language_survey:
     - text: "Would you be willing to tell me a bit about the languages you speak?"
 
     utter_ask_myth_source:
-    - text: "If you don't mind me asking - where did you here that?"
+    - text: "If you don't mind me asking - where did you hear that?"
       buttons:
       - title: "Friends & Family"
         payload: "friends_and_family"
@@ -118,26 +139,22 @@ responses:
     - text: "What language you mainly speak at home?"
 
     utter_ask_language_for_written_comms:
-    - text: "Which language do you prefer to read information in?"
+    - text: "Which language do you prefer to *read* information in?"
 
     utter_ask_language_for_verbal_comms:
-    - text: "Which language do you prefer listening to information in?"
+    - text: "And is that the same language you like to *listen* to information in?\n\n If not, which language do you prefer?"
 
     utter_ask_preferred_channel:
-    - text: "How do you prefer to receive information"
+    - text: "How do you prefer to receive information?"
       buttons:
       - title: "talking to people"
         payload: "in_person"
       - title: "radio"
         payload: "radio"
-      - title: "TV"
-        payload: "TV"
-      - title: "poster"
-        payload: "poster"
       - title: "leaflet"
         payload: "leaflet"
-      - title: "phone call"
-        payload: "phone"
+      - title: "WhatsApp"
+        payload: "WhatsApp"
       - title: "SMS"
         payload: "SMS"
       - title: "Other"
@@ -164,20 +181,33 @@ responses:
     - text: "What's your email address?"
 
     utter_greet:
-    - text: "Hey! How are you?"
+    - text: "Hey! It's nice to talk to you."
+    - text: "Hi. Hope you're having a good day."
+
+    utter_greet_with_name:
+    - text: "Hi {given_name}!"
+    - text: "Hey {given_name}, how's your day going?"
 
     utter_get_informed_consent:
     - text: "
-            Hi. Thanks for using [our chatbot]. Don’t worry, no one can identify
+            Hi. Thanks for getting in touch. My name is <~~bot_name~~ Uji> Don’t worry, no one can identify
             you from your questions or comments however we want you to know that we
             will collect and analyze what you type. If we do, we we’ll use it to make this service
-            better. We promise that we’ll NEVER use your personal information,
+            better. We promise that we’ll **NEVER** use your personal information,
             including your phone number, unless you tell us that we can.
             By carrying on this conversation, we will assume that you agree. Thank you
             "
 
     utter_set_expectations:
-    - text: "I can answer questions about COVID-19, what would you like to know?"
+    - text: "
+            I can answer questions about COVID-19, what would you like to know?
+            \n\nFor instance, I can tell you how many people have the disease, or how to keep yourself safe.
+            \n\nI haven't been doing this long, so please be patient with me!
+            "
+    - text: "
+            I can answer questions about COVID-19, what would you like to know?
+            \n\nFor instance, I can tell you how many people have the disease, or how to keep yourself safe.
+            "
 
     utter_introduce_survey:
     - text: "
@@ -185,20 +215,26 @@ responses:
             I'd like to ask you a few questions about the languages you know...
             "
 
-    utter_greet_with_name:
-    - text: "Hi {name}!"
-    - text: "Hey {name}, how's your day going?"
-
   # utter_cheer_up:
   # - text: "Here is something to cheer you up:"
   #   image: "https://i.imgur.com/nGF1K8f.jpg"
   #
     utter_explain_pandemic:
-    - text: "Here's something to explain the differences"
+    - text: "An epidemic is local or regional, a pandemic is in multiple countries and regions across the world."
 
     utter_explain_pandemic2:
     - text: "Here's something to explain the differences"
       image: "https://cdn.technologynetworks.com/tn/images/body/endemicvsepidemicimage41568108070133.png"
+
+    utter_explain_pandemic3:
+    - text: "Here's something to explain the differences"
+      custom:
+        attachment:
+          type: video
+          payload:
+            title: "My video"
+            src: "https://www.youtube.com/watch?v=nMelwUuGqpA"
+
 
     utter_thanks_for_your_feedback:
     - text: "Thanks, that's interesting!"
@@ -265,7 +301,7 @@ responses:
     - text: "There is a lot of false information around. These are the facts. - People of all ages CAN be infected by the coronavirus. Older people, and people with pre-existing medical conditions (such as asthma, diabetes, heart disease) appear to be more vulnerable to becoming severely ill with the virus. Cold weather and snow CANNOT kill the coronavirus. The coronavirus CAN be transmitted in areas with hot and humid climates The coronavirus CANNOT be transmitted through mosquito bites. There is NO evidence that companion animals/pets such as dogs or cats can transmit the coronavirus. Taking a hot bath DOES NOT prevent the coronavirus Hand dryers are NOT effective in killing the coronavirus Ultraviolet light SHOULD NOT be used for sterilization and can cause skin irritation Thermal scanners CAN detect if people have a fever but CANNOT detect whether or not someone has the coronavirus Spraying alcohol or chlorine all over your body WILL NOT kill viruses that have already entered your body Vaccines against pneumonia, such as pneumococcal vaccine and Haemophilus influenzae type b (Hib) vaccine, DO NOT provide protection against the coronavirus. There is NO evidence that regularly rinsing the nose with saline has protected people from infection with the coronavirus.  Garlic is healthy but there is NO evidence from the current outbreak that eating garlic has protected people from the coronavirus. Antibiotics DO NOT work against viruses, antibiotics only work against bacteria. To date, there is NO specific medicine recommended to prevent or treat the coronavirus. Check the facts on the WHO website: https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters"
 
     utter_answer_covid_donts:
-    - text: "The following measures ARE NOT effective against COVID-2019 and can be harmful: - Smoking - Wearing multiple masks - Taking antibiotics In any case, if you have fever, cough and difficulty breathing seek medical care early to reduce the risk of developing a more severe infection and be  sure to share your recent travel history with your health care provider.                                                                                                                                                                                                        "
+    - text: "The following measures ARE NOT effective against COVID-2019 and can be harmful: - Smoking - Wearing multiple masks - Taking antibiotics In any case, if you have fever, cough and difficulty breathing seek medical care early to reduce the risk of developing a more severe infection and be  sure to share your recent travel history with your health care provider."
 
     utter_answer_covid_on_surfaces:
     - text: "It is not certain how long the virus that causes COVID-19 survives on surfaces, but it seems to behave like other coronaviruses. Studies suggest that coronaviruses (including preliminary information on the COVID-19 virus) may persist on surfaces for a few hours or up to several days. This may vary under different conditions (e.g. type of surface, temperature or humidity of the environment). The likelihood of an infected person contaminating commercial goods is low and the risk of catching the virus that causes COVID-19 from a package that has been moved, travelled, and exposed to different conditions and temperature is also low. If you think a surface may be infected, clean it with simple disinfectant to kill the virus and protect yourself and others. Clean your hands with an alcohol-based hand rub or wash them with soap and water. Avoid touching your eyes, mouth, or nose."
@@ -318,13 +354,26 @@ responses:
     utter_answer_fallback:
     - text: "I'm sorry didn't quite get that. Please say that again."
 
+    utter_out_of_scope:
+    - text: "Sorry, I don't know how to respond to that."
+    - text: "I'm sorry, I can't answer that now."
+    - text: "I don't know what to say to that"
+
+    utter_get_back_on_topic:
+    - text: "Any questions about COVID-19 or general questions about health I can help you with?"
+
+    utter_anything_else_question:
+    - text: "Anything else I can try to answer for you?"
+
     utter_answer_goodbye:
-    - text: "Great. Please reach out again if you have any questions."
+    - text: "Goodbye. Please reach out again if you have any questions."
+    - text: "Bye! Nice talking with you!"
 
     utter_answer_greeting:
     - text: "Hello! I can answer questions about COVID-19. How can I help with today?"
 
     utter_goodbye:
+    - text: "Goodbye. Please reach out again if you have any questions."
     - text: "Bye! Nice talking with you!"
 
 

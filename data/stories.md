@@ -13,6 +13,8 @@
   - language_questions_form
   - form{"name": "language_questions_form"}
   - form{"name": null}
+  <!-- more conversation -->
+  - utter_anything_else_question
 * goodbye
   - feedback_form
   - form{"name": "feedback_form"}
@@ -22,6 +24,11 @@
 ## happy path for statistics
 * ask_for_stats
   - action_get_infection_stats
+  -utter_anything_else_question
+
+## unhappy path for out of scope
+  - utter_out_of_scope
+  - utter_get_back_on_topic
 
 ## answercovid_myth_cure
 * covid_myth_cure
@@ -37,6 +44,7 @@
  - myth_source_form
  - form{"name": "myth_source_form"}
  - form{"name": null}
+ - utter_anything_else_question
 * goodbye
    - feedback_form
    - form{"name": "feedback_form"}
@@ -45,7 +53,7 @@
 
 ## answercovid_explain_pandemic
 * covid_explain_pandemic
- - utter_explain_pandemic
+ - utter_explain_pandemic3
  - action_link_to_pandemic_video
 
 ## answercovid_myth_saline_rinse
@@ -180,20 +188,20 @@
 * wash_hands_frequency
  - utter_answer_wash_hands_frequency
 
-## answercollect_fallback
-* collect_fallback
- - utter_answer_collect_fallback
+## answer_out_of_scope
+* out_of_scope
+ - utter_out_of_scope
 
 ## answerfallback
 * fallback
  - utter_answer_fallback
 
-## answergoodbye
+<!-- ## answergoodbye
 * goodbye
- - utter_answer_goodbye
+ - utter_answer_goodbye -->
 
 ## answergreeting
-* greeting
+* greet
  - utter_answer_greeting
  - utter_get_informed_consent
  - utter_set_expectations
